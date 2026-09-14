@@ -26,7 +26,7 @@
     min-height: 1080px;
     background: #0A0C0F;
     font-family: 'Inter', sans-serif;
-    zoom: 1;
+    zoom: 0.9;
   }
 
   body{ display:flex; align-items:center; justify-content:center; padding: 24px 0; }
@@ -284,6 +284,62 @@
   }
   .op-tag.tag-maint{ background:rgba(229,83,61,0.18); color:var(--red); }
   .op-tag.tag-idle{ background:rgba(139,148,160,0.15); color:var(--muted); }
+
+  /* ============================================================
+     RESPONSIVO — MOBILE
+     A partir daqui, tudo é só ativado em telas pequenas.
+     No monitor/TV nada muda: as regras acima continuam mandando.
+     ============================================================ */
+  @media (max-width: 900px){
+    html, body{
+      width: 100%;
+      min-height: auto;
+      zoom: 1;
+    }
+    body{ padding: 0; align-items: flex-start; }
+    .card{ width: 100%; }
+    .rivet{ display:none; }
+
+    .dash-header{
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 16px 16px 16px;
+    }
+    .date-picker-wrap{ align-items:center; order:2; }
+    .title{
+      position: static;
+      transform: none;
+      font-size: 20px;
+      order: 1;
+      text-align: center;
+      white-space: normal;
+    }
+    .brand-logo{ height:34px; order:3; }
+
+    .tab-bar{ padding: 0 12px; overflow-x:auto; }
+    .tab-btn{ font-size:12px; padding:12px 12px 10px 12px; white-space:nowrap; }
+
+    .dash-body{ flex-direction: column; padding: 16px; }
+    .col.left, .col.right{ flex:none; width:100%; margin-right:0; }
+    .col > *{ margin-bottom:16px; }
+    .col > *:last-child{ margin-bottom:0; }
+
+    .week-days{ overflow-x:auto; padding-bottom:4px; }
+    .week-day{ min-width:38px; }
+
+    .matrix-block{ overflow-x:auto; }
+    .matrix{ min-width:560px; }
+
+    .rows-grid{ grid-template-columns: 1fr; }
+
+    .trips-cols{ flex-direction:column; gap:14px; }
+
+    .op-machine-code{ min-width:64px; font-size:12.5px; }
+    .op-machine-row{ gap:8px; }
+
+    .dash-footer{ flex-direction:column; gap:6px; padding:14px 16px 20px 16px; }
+  }
 </style>
 </head>
 <body>
