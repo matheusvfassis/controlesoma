@@ -353,7 +353,7 @@
   <div class="dash-header">
     <div class="date-picker-wrap">
       <div class="date-picker-label">VER DIA</div>
-      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-14">
+      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-15">
       <div class="date-weekday" id="dateWeekday"></div>
     </div>
     <div class="title" id="mainTitle">Controle de Máquinas</div>
@@ -761,6 +761,23 @@ function render(D){
 const opMachineOrder = ["EH 05","EH 09","TE 03","TEA 279","TEA 340","RE 01","CP 05","CP 06","CP 07","CP 17","CP 18","FUW 0A32","EKK 1450","EKH 9H12","Atividades Gerais - Soma","Atividades Gerais - Terceiros"];
 
 const opCalendar = {
+  "2026-09-15": {
+    "EH 05":{status:"work",desc:"Drenos CLIIA e carregamento de terra ampliação CLI"},
+    "EH 09":{status:"work",desc:"Carregamento de entulho"},
+    "TE 03":{status:"work",desc:"Cobertura CLIIA e Vala 3"},
+    "TEA 279":{status:"work",desc:"Vala 3 e cobertura CLIIA"},
+    "TEA 340":{status:"work",desc:"Frente de serviço"},
+    "RE 01":{status:"work",desc:"Solidificação"},
+    "CP 06":{status:"maint"},
+    "CP 07":{status:"work",desc:"6 solidificação para Vala 3"},
+    "CP 17":{status:"work",desc:"2 pedra para o dreno CLIIA e 19 entulho para o CLIIA"},
+    "CP 18":{status:"work",desc:"4 pedra para o dreno CLIIA e 22 entulho para o CLIIA"},
+    "FUW 0A32":{status:"work",desc:"14 terra para cobertura CLIIA"},
+    "EKK 1450":{status:"work",desc:"12 terra para cobertura CLIIA"},
+    "EKH 9H12":{status:"work",desc:"13 terra para cobertura CLIIA"},
+    "Atividades Gerais - Soma":{status:"work",desc:"Perfuração para instalação das placas, catação de sacolinhas e preparação para ligação do dreno vala 2 e 8"},
+    "Atividades Gerais - Terceiros":{status:"work",desc:"Petrus - Drenagem e concretagem do pátio da balança"}
+  },
   "2026-09-13": {
     "EH 05":{status:"idle"}, "EH 09":{status:"idle"}, "TE 03":{status:"idle"}, "TEA 279":{status:"idle"}, "TEA 340":{status:"idle"},
     "RE 01":{status:"idle"}, "CP 06":{status:"idle"}, "CP 07":{status:"idle"}, "CP 17":{status:"idle"}, "CP 18":{status:"idle"},
@@ -774,8 +791,8 @@ const opCalendar = {
     "TEA 279":{status:"work",desc:"Vala 3"},
     "TEA 340":{status:"work",desc:"Frente de serviço"},
     "RE 01":{status:"work",desc:"Solidificação"},
-    "CP 06":{status:"mixed-pm",desc:"3 solidificação"},
-    "CP 07":{status:"work",desc:"Ociosa até o almoço; 3 solidificação à tarde"},
+    "CP 06":{status:"mixed-pm",desc:"3 solidificação para vala 3"},
+    "CP 07":{status:"work",desc:"Ociosa até o almoço; 3 solidificação para Vala 3 à tarde"},
     "CP 17":{status:"work",desc:"Movimentação de pessoal (cobrindo CT 36)"},
     "CP 18":{status:"work",desc:"7 terra cobertura CLIIA"},
     "FUW 0A32":{status:"work",desc:"10 terra cobertura CLIIA"},
@@ -1427,6 +1444,8 @@ function opParseTripSegment(seg){
   }
   // remove sufixos de período do dia que não são o destino (ex: "à tarde", "de manhã")
   rest = rest.replace(/\s*(à tarde|a tarde|de manhã|pela manhã|no almoço|após o almoço|antes do almoço)\s*$/i, "").trim();
+  // remove preposição solta na frente do destino (ex: "para cobertura" -> "cobertura")
+  rest = rest.replace(/^para\s+(o\s+|a\s+)?/i, "").trim();
   const local = rest.length > 0 ? rest.charAt(0).toUpperCase() + rest.slice(1) : "";
   const label = local ? `${material} · ${local}` : material;
   return {qty, label};
