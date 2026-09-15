@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 <style>
+
   :root{
     --bg: #12151A;
     --panel: #1D2228;
@@ -23,17 +24,19 @@
   *{box-sizing:border-box; margin:0; padding:0;}
 
   html, body{
-    width: 1920px;
-    min-height: 1080px;
+    width: 100%;
+    min-height: 100vh;
     background: #0A0C0F;
     font-family: 'Inter', sans-serif;
-    zoom: 0.9;
+    overflow-x: hidden;
   }
 
   body{ display:flex; align-items:center; justify-content:center; padding: 24px 0; }
 
   .card{
     width: 1800px;
+    flex-shrink: 0;
+    transform-origin: center center;
     background: var(--bg);
     border: 1px solid var(--border);
     color: var(--text);
@@ -411,7 +414,35 @@ function switchTab(tab){
   document.getElementById('tabOperacional').style.display = tab==='operacional' ? '' : 'none';
   document.getElementById('tabBtnParadas').classList.toggle('active', tab==='paradas');
   document.getElementById('tabBtnOperacional').classList.toggle('active', tab==='operacional');
+  fitCardToViewport();
 }
+
+// ============================================================
+// ESCALA DINÂMICA — ajusta o cartão pra caber em qualquer resolução
+// de tela (monitor, notebook, TV), recalculando sempre que o
+// conteúdo muda de tamanho (troca de data, troca de aba) ou a
+// janela é redimensionada. Não faz nada no celular (a media query
+// de largura <=900px já cuida do layout ali).
+// ============================================================
+function fitCardToViewport(){
+  const card = document.querySelector('.card');
+  if(!card) return;
+  if(window.innerWidth <= 900){
+    card.style.transform = 'none';
+    return;
+  }
+  card.style.transform = 'none';
+  const naturalW = card.offsetWidth;
+  const naturalH = card.offsetHeight;
+  if(!naturalW || !naturalH) return;
+  const availW = window.innerWidth * 0.96;
+  const availH = window.innerHeight * 0.94;
+  let scale = Math.min(availW / naturalW, availH / naturalH);
+  scale = Math.max(0.45, Math.min(scale, 1.15));
+  card.style.transform = 'scale(' + scale.toFixed(4) + ')';
+}
+window.addEventListener('resize', fitCardToViewport);
+window.addEventListener('load', fitCardToViewport);
 </script>
 
 <script>
@@ -1449,11 +1480,12 @@ function updateWeekdayLabel(D){
 }
 
 document.getElementById('datePicker').addEventListener('change', (e) => {
-  if(e.target.value){ render(e.target.value); opRender(e.target.value); updateWeekdayLabel(e.target.value); }
+  if(e.target.value){ render(e.target.value); opRender(e.target.value); updateWeekdayLabel(e.target.value); fitCardToViewport(); }
 });
 render(document.getElementById('datePicker').value);
 opRender(document.getElementById('datePicker').value);
 updateWeekdayLabel(document.getElementById('datePicker').value);
+fitCardToViewport();
 </script>
 </body>
 </html>
