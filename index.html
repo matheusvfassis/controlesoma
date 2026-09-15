@@ -1479,6 +1479,24 @@ function updateWeekdayLabel(D){
   document.getElementById('dateWeekday').textContent = WD_FULL[dayOfWeek(D)];
 }
 
+// ============================================================
+// TRAVA DE DATA — não deixa selecionar além do último dia que
+// realmente tem dado confirmado (calculado sozinho a partir da
+// própria base, então não precisa lembrar de atualizar isso
+// toda vez que uma semana nova entrar).
+// ============================================================
+(function limitarDataMaxima(){
+  const datasOperacional = Object.keys(opCalendar);
+  const datasParadas = events.map(ev => ev.end).filter(Boolean);
+  const todasDatas = datasOperacional.concat(datasParadas).sort();
+  const ultimaData = todasDatas[todasDatas.length - 1];
+  const picker = document.getElementById('datePicker');
+  if(ultimaData){
+    picker.max = ultimaData;
+    if(picker.value > ultimaData) picker.value = ultimaData;
+  }
+})();
+
 document.getElementById('datePicker').addEventListener('change', (e) => {
   if(e.target.value){ render(e.target.value); opRender(e.target.value); updateWeekdayLabel(e.target.value); fitCardToViewport(); }
 });
