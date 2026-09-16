@@ -353,7 +353,7 @@
   <div class="dash-header">
     <div class="date-picker-wrap">
       <div class="date-picker-label">VER DIA</div>
-      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-15">
+      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-16">
       <div class="date-weekday" id="dateWeekday"></div>
     </div>
     <div class="title" id="mainTitle">Controle de Máquinas</div>
@@ -463,6 +463,8 @@ window.addEventListener('load', fitCardToViewport);
 // colorida automaticamente (máquina estava parada e foi liberada depois).
 // ============================================================
 const events = [
+  {code:"TE 03", desc:"Radiador", categoria:"Mecânica", start:"2026-09-16", end:null, resolvedDate:null, outcome:null},
+  {code:"I 03", desc:"Folga no diferencial", categoria:"Mecânica", start:"2026-09-16", end:null, resolvedDate:null, outcome:null},
   {code:"CP 06", desc:"Indicador de temperatura parou, alguns faróis e lanternas queimados", categoria:"Elétrica", start:"2026-09-14", end:null, resolvedDate:null, outcome:null, startMidDay:true},
   // ---- Abril(final)/Maio 2026 ----
   {code:"TP 45", desc:"Problema com 2ª marcha", categoria:"Mecânica", start:"2026-04-26", end:"2026-04-29", resolvedDate:"2026-04-30", outcome:"reparo"},
@@ -761,6 +763,23 @@ function render(D){
 const opMachineOrder = ["EH 05","EH 09","TE 03","TEA 279","TEA 340","RE 01","CP 05","CP 06","CP 07","CP 17","CP 18","FUW 0A32","EKK 1450","EKH 9H12","Atividades Gerais - Soma","Atividades Gerais - Terceiros"];
 
 const opCalendar = {
+  "2026-09-16": {
+    "EH 05":{status:"work",desc:"Apoio obra pátio da balança e ampliação CLI"},
+    "EH 09":{status:"work",desc:"Carregamento de entulho"},
+    "TE 03":{status:"maint"},
+    "TEA 279":{status:"work",desc:"Cobertura CLIIA"},
+    "TEA 340":{status:"work",desc:"Frente de serviço"},
+    "RE 01":{status:"work",desc:"Solidificação"},
+    "CP 06":{status:"maint"},
+    "CP 07":{status:"work",desc:"11 solidificação para Vala 3"},
+    "CP 17":{status:"work",desc:"20 entulho cobertura CLIIA"},
+    "CP 18":{status:"work",desc:"19 entulho cobertura CLIIA"},
+    "FUW 0A32":{status:"work",desc:"7 terra cobertura CLIIA"},
+    "EKK 1450":{status:"work",desc:"17 entulho cobertura CLIIA"},
+    "EKH 9H12":{status:"work",desc:"6 terra cobertura CLIIA"},
+    "Atividades Gerais - Soma":{status:"work",desc:"Roçada, catação de sacolinhas e preparação para ligação do dreno vala 2 e vala 8"},
+    "Atividades Gerais - Terceiros":{status:"work",desc:"Petrus - Drenagem e concretagem do pátio da balança; Decide - Galpão vala 6"}
+  },
   "2026-09-15": {
     "EH 05":{status:"work",desc:"Drenos CLIIA e carregamento de terra ampliação CLI"},
     "EH 09":{status:"work",desc:"Carregamento de entulho"},
