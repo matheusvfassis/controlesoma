@@ -353,7 +353,7 @@
   <div class="dash-header">
     <div class="date-picker-wrap">
       <div class="date-picker-label">VER DIA</div>
-      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-16">
+      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-17">
       <div class="date-weekday" id="dateWeekday"></div>
     </div>
     <div class="title" id="mainTitle">Controle de Máquinas</div>
@@ -465,7 +465,8 @@ window.addEventListener('load', fitCardToViewport);
 const events = [
   {code:"TE 03", desc:"Radiador", categoria:"Mecânica", start:"2026-09-16", end:null, resolvedDate:null, outcome:null},
   {code:"I 03", desc:"Folga no diferencial", categoria:"Mecânica", start:"2026-09-16", end:null, resolvedDate:null, outcome:null},
-  {code:"CP 06", desc:"Indicador de temperatura parou, alguns faróis e lanternas queimados", categoria:"Elétrica", start:"2026-09-14", end:null, resolvedDate:null, outcome:null, startMidDay:true},
+  {code:"CP 06", desc:"Indicador de temperatura parou, alguns faróis e lanternas queimados", categoria:"Elétrica", start:"2026-09-14", end:"2026-09-16", resolvedDate:"2026-09-17", outcome:"reparo", startMidDay:true},
+  {code:"CP 06", desc:"Pneu estourou", categoria:"Pneumática", start:"2026-09-17", end:null, resolvedDate:null, outcome:null},
   // ---- Abril(final)/Maio 2026 ----
   {code:"TP 45", desc:"Problema com 2ª marcha", categoria:"Mecânica", start:"2026-04-26", end:"2026-04-29", resolvedDate:"2026-04-30", outcome:"reparo"},
   {code:"TE 03", desc:"Esteira soltou", categoria:"Mecânica", start:"2026-04-26", end:"2026-05-03", resolvedDate:"2026-05-04", outcome:"reparo"},
@@ -639,31 +640,37 @@ function render(D){
 
   // ---- matriz da semana ----
   const wStart = wDates[0], wEnd = wDates[6];
+  // Agrupa por máquina (code): se a mesma máquina tiver mais de uma ocorrência
+  // dentro da semana (ex.: uma se resolveu e outra começou), fica na MESMA linha —
+  // cada dia usa a ocorrência que estava valendo naquele dia.
   const weekMachines = [];
-  const seen = new Set();
+  const machineEvents = new Map();
   events.forEach(ev => {
     if(ev.start <= D && ev.start <= wEnd && (ev.end === null || ev.end >= wStart)){
-      const key = ev.code + '|' + ev.desc;
-      if(!seen.has(key)){ seen.add(key); weekMachines.push(ev); }
+      if(!machineEvents.has(ev.code)){ machineEvents.set(ev.code, []); weekMachines.push(ev.code); }
+      machineEvents.get(ev.code).push(ev);
     }
   });
   const matrixEl = document.getElementById('matrixTable');
   let theadHtml = '<thead><tr><th class="matrix-machine-h"></th>' +
     wDates.map(day => `<th class="${day===D?'today-col':''}">${fmtDM(day)}</th>`).join('') + '</tr></thead>';
-  let tbodyHtml = '<tbody>' + weekMachines.map(ev => {
+  let tbodyHtml = '<tbody>' + weekMachines.map(code => {
+    const evsForCode = machineEvents.get(code);
     const cells = wDates.map(day => {
       const todayColClass = day===D ? ' today-col' : '';
       if(day > D) return `<td class="${todayColClass}"><span class="dot future"></span></td>`;
-      const on = presentInclusive(ev, day);
-      const isReleasedHalf = on && day === ev.end && ev.resolvedDate === ev.end;
-      const isStoppedHalf = on && day === ev.start && ev.startMidDay;
+      const evOnDay = evsForCode.find(ev => presentInclusive(ev, day));
       let dotClass = 'off';
-      if(isReleasedHalf) dotClass = 'half-released';
-      else if(isStoppedHalf) dotClass = 'half-stopped';
-      else if(on) dotClass = 'on';
+      if(evOnDay){
+        const isReleasedHalf = day === evOnDay.end && evOnDay.resolvedDate === evOnDay.end;
+        const isStoppedHalf = day === evOnDay.start && evOnDay.startMidDay;
+        if(isReleasedHalf) dotClass = 'half-released';
+        else if(isStoppedHalf) dotClass = 'half-stopped';
+        else dotClass = 'on';
+      }
       return `<td class="${todayColClass}"><span class="dot ${dotClass}"></span></td>`;
     }).join('');
-    return `<tr><td class="matrix-machine">${ev.code}</td>${cells}</tr>`;
+    return `<tr><td class="matrix-machine">${code}</td>${cells}</tr>`;
   }).join('') + '</tbody>';
   matrixEl.innerHTML = theadHtml + tbodyHtml;
   matrixEl.className = weekMachines.length > 10 ? 'matrix compact' : 'matrix';
@@ -763,6 +770,23 @@ function render(D){
 const opMachineOrder = ["EH 05","EH 09","TE 03","TEA 279","TEA 340","RE 01","CP 05","CP 06","CP 07","CP 17","CP 18","FUW 0A32","EKK 1450","EKH 9H12","Atividades Gerais - Soma","Atividades Gerais - Terceiros"];
 
 const opCalendar = {
+  "2026-09-17": {
+    "EH 05":{status:"work",desc:"Apoio obra pátio da balança e ampliação CLI"},
+    "EH 09":{status:"work",desc:"Carregamento de entulho"},
+    "TE 03":{status:"maint"},
+    "TEA 279":{status:"work",desc:"Frente de serviço e Cobertura CLIIA"},
+    "TEA 340":{status:"mixed-am",desc:"Frente de serviço"},
+    "RE 01":{status:"work",desc:"Solidificação e apoio obra pátio da balança"},
+    "CP 06":{status:"maint"},
+    "CP 07":{status:"work",desc:"6 solidificação para Vala 3"},
+    "CP 17":{status:"work",desc:"2 pedra dreno CLIIA e 16 entulho CLIIA"},
+    "CP 18":{status:"work",desc:"2 pedra dreno CLIIA e 18 entulho CLIIA"},
+    "FUW 0A32":{status:"work",desc:"7 terra cobertura CLIIA"},
+    "EKK 1450":{status:"work",desc:"12 entulho CLIIA e 1 terra cobertura CLIIA"},
+    "EKH 9H12":{status:"work",desc:"8 terra cobertura CLIIA"},
+    "Atividades Gerais - Soma":{status:"work",desc:"Roçada, catação de sacolinhas, organização de tambores/tapumes e preparação para ligação do dreno vala 2 e vala 8"},
+    "Atividades Gerais - Terceiros":{status:"work",desc:"Petrus - Drenagem e concretagem do pátio da balança; Decide - Galpão vala 6; JVK - Energia vala 6 e montagem de extensões"}
+  },
   "2026-09-16": {
     "EH 05":{status:"work",desc:"Apoio obra pátio da balança e ampliação CLI"},
     "EH 09":{status:"work",desc:"Carregamento de entulho"},
