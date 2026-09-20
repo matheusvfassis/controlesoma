@@ -363,7 +363,7 @@
   .cr-btn:hover{ border-color:var(--amber); color:var(--amber); }
   .cr-lbl{ font-family:'Oswald', sans-serif; font-size:11px; color:var(--muted); letter-spacing:.5px; margin-right:6px; }
 
-  .cr-scroll{ border:1px solid var(--border); background:var(--panel); max-height:700px; overflow:auto; }
+  .cr-scroll{ border:1px solid var(--border); background:var(--panel); overflow:auto; }
   .cr-inner{ min-width:0; }
 
   .cr-head{ display:grid; grid-template-columns:var(--crl) 1fr; position:sticky; top:0; z-index:4; background:var(--panel-raised); border-bottom:1px solid var(--border); }
@@ -522,6 +522,7 @@ function switchTab(tab){
   document.getElementById('tabBtnOperacional').classList.toggle('active', tab==='operacional');
   document.getElementById('tabCronograma').style.display = tab==='cronograma' ? '' : 'none';
   document.getElementById('tabBtnCronograma').classList.toggle('active', tab==='cronograma');
+  if(tab==='cronograma') crFitHeight();
   fitCardToViewport();
 }
 
@@ -549,6 +550,26 @@ function fitCardToViewport(){
   scale = Math.max(0.45, Math.min(scale, 1.15));
   card.style.transform = 'scale(' + scale.toFixed(4) + ')';
 }
+
+// Mantém o cartão do Cronograma com a mesma altura do Operacional,
+// para a escala (resolução) da tela não mudar ao trocar de aba.
+function crFitHeight(){
+  const sc=document.getElementById('crScroll'), card=document.querySelector('.card');
+  if(!sc||!card) return;
+  if(window.innerWidth<=900){ sc.style.height=''; return; }
+  const op=document.getElementById('tabOperacional'), cr=document.getElementById('tabCronograma');
+  const opShown=op.style.display, crShown=cr.style.display;
+  // altura de referência = cartão com a aba Operacional aberta
+  op.style.display=''; cr.style.display='none';
+  const refH=card.offsetHeight;
+  // altura do cartão com o calendário zerado
+  op.style.display='none'; cr.style.display='';
+  sc.style.height='0px';
+  const baseH=card.offsetHeight;
+  op.style.display=opShown; cr.style.display=crShown;
+  sc.style.height=Math.max(320, refH-baseH)+'px';
+}
+window.addEventListener('resize', ()=>{ if(activeTab.value==='cronograma') crFitHeight(); });
 window.addEventListener('resize', fitCardToViewport);
 window.addEventListener('load', fitCardToViewport);
 </script>
