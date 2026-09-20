@@ -522,7 +522,7 @@ function switchTab(tab){
   document.getElementById('tabBtnOperacional').classList.toggle('active', tab==='operacional');
   document.getElementById('tabCronograma').style.display = tab==='cronograma' ? '' : 'none';
   document.getElementById('tabBtnCronograma').classList.toggle('active', tab==='cronograma');
-  if(tab==='cronograma') crFitHeight();
+  equalizeTabs();
   fitCardToViewport();
 }
 
@@ -551,27 +551,28 @@ function fitCardToViewport(){
   card.style.transform = 'scale(' + scale.toFixed(4) + ')';
 }
 
-// Mantém o cartão do Cronograma com a mesma altura do Operacional,
+// Iguala a altura das três abas (Operacional, Manutenção e Cronograma)
 // para a escala (resolução) da tela não mudar ao trocar de aba.
-function crFitHeight(){
-  const sc=document.getElementById('crScroll'), card=document.querySelector('.card');
-  if(!sc||!card) return;
-  if(window.innerWidth<=900){ sc.style.height=''; return; }
-  const op=document.getElementById('tabOperacional'), cr=document.getElementById('tabCronograma');
-  const opShown=op.style.display, crShown=cr.style.display;
-  // altura de referência = cartão com a aba Operacional aberta
-  op.style.display=''; cr.style.display='none';
-  const refH=card.offsetHeight;
-  // altura do cartão com o calendário zerado
-  op.style.display='none'; cr.style.display='';
-  sc.style.height='0px';
-  const baseH=card.offsetHeight;
-  op.style.display=opShown; cr.style.display=crShown;
-  sc.style.height=Math.max(320, refH-baseH)+'px';
+function equalizeTabs(){
+  const card=document.querySelector('.card');
+  const op=document.getElementById('tabOperacional'), pa=document.getElementById('tabParadas'), cr=document.getElementById('tabCronograma'), sc=document.getElementById('crScroll');
+  if(!card||!op||!pa||!cr||!sc) return;
+  if(window.innerWidth<=900){ op.style.minHeight=pa.style.minHeight=cr.style.minHeight=''; sc.style.height=''; return; }
+  const saved=[op.style.display,pa.style.display,cr.style.display];
+  op.style.minHeight=pa.style.minHeight=''; sc.style.height='0px';
+  const h=p=>{ op.style.display=pa.style.display=cr.style.display='none'; p.style.display=''; return p.offsetHeight; };
+  const hOp=h(op), hPa=h(pa), hCr=h(cr);
+  const target=Math.max(hOp,hPa);
+  sc.style.height=Math.max(320, target-hCr)+'px';
+  h(cr); const diff=target-cr.offsetHeight;
+  if(diff) sc.style.height=Math.max(320, (parseFloat(sc.style.height)||0)+diff)+'px';
+  op.style.minHeight=pa.style.minHeight=target+'px';
+  [op.style.display,pa.style.display,cr.style.display]=saved;
 }
-window.addEventListener('resize', ()=>{ if(activeTab.value==='cronograma') crFitHeight(); });
+window.addEventListener('resize', ()=>{ equalizeTabs(); });
 window.addEventListener('resize', fitCardToViewport);
-window.addEventListener('load', fitCardToViewport);
+window.addEventListener('load', ()=>{ equalizeTabs(); fitCardToViewport(); });
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ equalizeTabs(); fitCardToViewport(); });
 </script>
 
 <script>
@@ -1948,7 +1949,7 @@ fitCardToViewport();
     gs.forEach(g=>allOpen?st.aberto.delete(g.id):st.aberto.add(g.id));
     crRender();
   };
-  document.getElementById('datePicker').addEventListener('change',()=>{ if(st.vista==='cal') crRender(); });
+  document.getElementById('datePicker').addEventListener('change',()=>{ if(st.vista==='cal') crRender(); equalizeTabs(); if(typeof fitCardToViewport==='function') fitCardToViewport(); });
   crRender();
 })();
 </script>
