@@ -344,6 +344,99 @@
 
     .dash-footer{ flex-direction:column; gap:6px; padding:14px 16px 20px 16px; }
   }
+
+  /* ===== ABA CRONOGRAMA ===== */
+  .cr-wrap{ padding:22px 40px 26px 40px; --crl:400px; }
+  .cr-toolbar{ display:flex; flex-wrap:wrap; gap:14px 22px; align-items:center; margin-bottom:16px; }
+  .cr-seg{ display:flex; border:1px solid var(--border); background:var(--panel); }
+  .cr-seg button{
+    font-family:'Oswald', sans-serif; font-size:12px; font-weight:500; letter-spacing:.3px;
+    color:var(--muted); background:transparent; border:none; padding:8px 14px; cursor:pointer; white-space:nowrap;
+  }
+  .cr-seg button + button{ border-left:1px solid var(--border); }
+  .cr-seg button:hover{ color:var(--text); }
+  .cr-seg button.on{ background:var(--amber); color:#12151A; }
+  .cr-sel, .cr-btn{
+    font-family:'Oswald', sans-serif; font-size:12px; font-weight:500; letter-spacing:.3px;
+    color:var(--text); background:var(--panel); border:1px solid var(--border); padding:8px 12px; cursor:pointer;
+  }
+  .cr-btn:hover{ border-color:var(--amber); color:var(--amber); }
+  .cr-lbl{ font-family:'Oswald', sans-serif; font-size:11px; color:var(--muted); letter-spacing:.5px; margin-right:6px; }
+
+  .cr-scroll{ border:1px solid var(--border); background:var(--panel); max-height:700px; overflow:auto; }
+  .cr-inner{ min-width:0; }
+
+  .cr-head{ display:grid; grid-template-columns:var(--crl) 1fr; position:sticky; top:0; z-index:4; background:var(--panel-raised); border-bottom:1px solid var(--border); }
+  .cr-hl{ font-family:'Oswald', sans-serif; font-size:11px; color:var(--muted); letter-spacing:.6px; padding:0 14px; display:flex; align-items:flex-end; padding-bottom:8px; position:sticky; left:0; background:var(--panel-raised); z-index:5; }
+  .cr-ht{ position:relative; height:48px; }
+  .cr-yr, .cr-mo{ position:absolute; font-family:'Oswald', sans-serif; color:var(--muted); overflow:hidden; white-space:nowrap; }
+  .cr-yr{ top:0; height:22px; line-height:22px; font-size:11.5px; font-weight:600; color:var(--text); padding-left:6px; border-left:1px solid var(--border); border-bottom:1px solid rgba(255,255,255,.05); }
+  .cr-mo{ top:22px; height:26px; line-height:26px; font-size:10px; text-align:center; border-left:1px solid rgba(255,255,255,.06); }
+  .cr-hoje-tag{ position:absolute; top:0; transform:translateX(-50%); background:var(--amber); color:#12151A; font-family:'Oswald', sans-serif; font-size:9.5px; font-weight:700; padding:1px 5px; z-index:2; }
+
+  .cr-body{ position:relative; }
+  .cr-grid{ position:absolute; top:0; bottom:0; left:var(--crl); right:0; pointer-events:none; z-index:0; }
+  .cr-gl{ position:absolute; top:0; bottom:0; width:1px; background:rgba(255,255,255,.05); }
+  .cr-gl.y{ background:rgba(255,255,255,.14); }
+  .cr-today{ position:absolute; top:0; bottom:0; width:0; border-left:2px dashed var(--amber); opacity:.85; }
+
+  .cr-sec{ position:relative; z-index:1; display:flex; align-items:baseline; gap:14px; padding:10px 14px; background:#171B21; border-top:1px solid var(--border); border-bottom:1px solid var(--border); position:sticky; left:0; }
+  .cr-sec-t{ font-family:'Oswald', sans-serif; font-size:15px; font-weight:600; color:var(--amber); letter-spacing:.6px; }
+  .cr-sec-s{ font-size:11.5px; color:var(--muted); }
+  .cr-row{ position:relative; z-index:1; display:grid; grid-template-columns:var(--crl) 1fr; border-bottom:1px solid rgba(255,255,255,.04); }
+  .cr-row.g{ height:36px; }
+  .cr-row.s{ height:27px; }
+  .cr-l{ display:flex; align-items:center; gap:6px; padding:0 12px 0 10px; background:var(--panel); position:sticky; left:0; z-index:3; border-right:1px solid var(--border); min-width:0; }
+  .cr-row.g .cr-l{ cursor:pointer; background:#20262D; }
+  .cr-row.g .cr-l:hover{ background:#262D36; }
+  .cr-row.s .cr-l{ padding-left:34px; }
+  .cr-chev{ width:12px; color:var(--muted); font-size:11px; flex:none; }
+  .cr-nm{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12.5px; }
+  .cr-row.g .cr-nm{ font-weight:600; }
+  .cr-row.s .cr-nm{ font-size:11.5px; color:#C3C9D1; }
+  .cr-pg{ font-family:'Oswald', sans-serif; font-size:12px; font-weight:600; color:var(--muted); flex:none; }
+  .cr-pg.ok{ color:var(--green); }
+  .cr-t{ position:relative; }
+  .cr-bar{ position:absolute; top:50%; transform:translateY(-50%); border:1px solid; overflow:hidden; min-width:4px; }
+  .cr-row.g .cr-bar{ height:18px; }
+  .cr-row.s .cr-bar{ height:11px; }
+  .cr-fill{ position:absolute; left:0; top:0; bottom:0; }
+  .cr-bar.cl{ border-left-width:0; }
+  .cr-bar.cr{ border-right-width:0; }
+  .cr-row.cancel .cr-bar{ border-style:dashed; opacity:.45; }
+  .cr-row.cancel .cr-nm{ text-decoration:line-through; color:var(--muted); }
+  .cr-dt{ position:absolute; top:50%; transform:translateY(-50%); font-size:10px; color:var(--muted); white-space:nowrap; padding:0 6px; }
+  .cr-tag{ font-family:'Oswald', sans-serif; font-size:9px; font-weight:600; color:var(--red); border:1px solid var(--red); padding:0 4px; margin-left:4px; flex:none; }
+
+  .cr-tbl{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  .cr-tbl th{ position:sticky; top:0; z-index:2; background:#4A4F55; color:#E6E8EB; font-family:'Oswald', sans-serif; font-size:11px; font-weight:500; letter-spacing:.5px; padding:10px 12px; text-align:center; }
+  .cr-tbl th.l, .cr-tbl td.l{ text-align:left; }
+  .cr-tbl td{ padding:8px 12px; text-align:center; border-bottom:1px solid rgba(255,255,255,.05); white-space:nowrap; }
+  .cr-tbl td.l{ white-space:normal; }
+  .cr-tbl tr.g td{ font-weight:600; }
+  .cr-tbl tr.s td.n{ padding-left:32px; }
+  .cr-tbl tr.sec td{ background:#171B21; color:var(--amber); font-family:'Oswald', sans-serif; font-size:14px; font-weight:600; letter-spacing:.6px; text-align:left; padding:10px 14px; }
+  .cr-tbl tr.sec td small{ color:var(--muted); font-family:'Inter', sans-serif; font-weight:400; font-size:11.5px; margin-left:12px; letter-spacing:0; }
+  .cr-tbl tr.g td.n{ cursor:pointer; }
+  .cr-tbl .obs{ color:#AEB6C0; font-style:italic; font-weight:400; font-size:11.5px; }
+  .cr-tbl .val{ color:var(--muted); font-weight:400; }
+  .cr-tbl tr.cancel td{ opacity:.5; }
+  .cr-tbl tr.cancel td.n{ text-decoration:line-through; }
+  .cr-pbar{ position:relative; height:18px; min-width:96px; background:rgba(255,255,255,.07); }
+  .cr-pbar i{ position:absolute; left:0; top:0; bottom:0; background:rgba(255,255,255,.22); }
+  .cr-pbar b{ position:relative; font-family:'Oswald', sans-serif; font-size:12px; font-weight:600; line-height:18px; }
+  .cr-legend{ display:flex; flex-wrap:wrap; gap:8px 24px; margin-top:12px; font-size:11.5px; color:var(--muted); align-items:center; }
+  .cr-legend .sw{ display:inline-block; width:26px; height:10px; border:1px solid #8B94A0; vertical-align:middle; margin-right:6px; position:relative; }
+  .cr-legend .sw i{ position:absolute; left:0; top:0; bottom:0; width:60%; background:#8B94A0; }
+  .cr-empty{ padding:40px; text-align:center; color:var(--muted); }
+
+  @media (max-width: 900px){
+    .cr-wrap{ padding:14px 12px 20px 12px; --crl:190px; }
+    .cr-inner{ min-width:980px; }
+    .cr-tbl{ min-width:820px; }
+    .cr-scroll{ max-height:none; }
+    .cr-nm{ font-size:11.5px; }
+  }
 </style>
 </head>
 <body>
@@ -363,6 +456,7 @@
   <div class="tab-bar">
     <button class="tab-btn active" id="tabBtnOperacional" onclick="switchTab('operacional')">Operacional</button>
     <button class="tab-btn" id="tabBtnParadas" onclick="switchTab('paradas')">Manutenção</button>
+    <button class="tab-btn" id="tabBtnCronograma" onclick="switchTab('cronograma')">Cronograma</button>
   </div>
 
   <div class="tab-panel" id="tabParadas" style="display:none">
@@ -404,6 +498,18 @@
   </div>
   </div>
 
+  <div class="tab-panel" id="tabCronograma" style="display:none">
+    <div class="cr-wrap">
+      <div class="cr-toolbar" id="crToolbar"></div>
+      <div class="cr-scroll" id="crScroll"></div>
+      <div class="cr-legend">
+        <span><span class="sw"><i></i></span>Parte preenchida = progresso</span>
+        <span style="color:var(--amber)">┆ Linha tracejada = dia selecionado em "VER DIA"</span>
+        <span>Clique numa atividade principal para mostrar/ocultar as etapas</span>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -414,6 +520,8 @@ function switchTab(tab){
   document.getElementById('tabOperacional').style.display = tab==='operacional' ? '' : 'none';
   document.getElementById('tabBtnParadas').classList.toggle('active', tab==='paradas');
   document.getElementById('tabBtnOperacional').classList.toggle('active', tab==='operacional');
+  document.getElementById('tabCronograma').style.display = tab==='cronograma' ? '' : 'none';
+  document.getElementById('tabBtnCronograma').classList.toggle('active', tab==='cronograma');
   fitCardToViewport();
 }
 
@@ -1585,5 +1693,244 @@ opRender(document.getElementById('datePicker').value);
 updateWeekdayLabel(document.getElementById('datePicker').value);
 fitCardToViewport();
 </script>
+
+<script>
+// ============================================================
+// ABA CRONOGRAMA — Classe 1 e Classe 2 juntos ou separados.
+// Para atualizar: edite as datas/progresso em CR abaixo
+// (formato dd/mm/aa, igual à planilha).
+// G(id, nome, cor, início, término, duração, progresso%, valor, [etapas])
+// S(id, nome, início, término, duração, progresso%, valor, observação, {extras})
+// cores: b=azul r=vermelho g=verde p=roxo o=laranja
+// ============================================================
+(function(){
+  const MESES=['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+  const CORES={b:'#5B9BD5', r:'#E07A72', g:'#6DBE7B', p:'#A78BDA', o:'#F0A15E'};
+  const DIA=86400000;
+  const pd=s=>{const [d,m,y]=s.split('/').map(Number);return Date.UTC(2000+y,m-1,d);};
+  const S=(id,nome,ini,fim,dur,prog,val,obs,ex)=>Object.assign({id,nome,ini:pd(ini),fim:pd(fim),dur,prog:(prog==null?null:Math.min(100,prog)),val:(val==null?null:val),obs:obs||''},ex||{});
+  const G=(id,nome,cor,ini,fim,dur,prog,val,subs)=>{const g=S(id,nome,ini,fim,dur,prog,val);g.cor=cor;g.subs=subs||[];return g;};
+
+  const CR={
+    c1:{nome:'CLASSE I', sub:'Vala 7 · Entrevalas · Céu aberto', grupos:[
+      G('c1-1','1. Ocupação da vala a céu aberto','b','20/11/25','09/04/26',141,100,154840.91,[
+        S('c1-1.1','1.1 Recebimento e disposição','20/11/25','09/04/26',141,100,null,'Considerando 3.000m³/mês'),
+        S('c1-1.2','1.2 Recebimento e disposição da Vala 7','17/03/26','07/04/26',21,100,111490.91,'Considerando ~6500m³ a m…'),
+        S('c1-1.3','1.3 Cobertura do maciço com terra','18/07/26','19/09/26',63,102,43350,'Operação com HE aos finais de semana'),
+        S('c1-1.4','1.4 Cobertura do maciço com manta','21/09/26','30/09/26',9,0,null,'2 equipes')]),
+      G('c1-2','2. Finalização da cobertura metálica da Vala 7','r','16/11/25','10/04/26',145,100,283963.70,[
+        S('c1-2.1','2.1 Montagem da estrutura metálica e drenagem','16/11/25','27/02/26',103,100,233963.70,'Passar a verba de 2025 para…'),
+        S('c1-2.2','2.2 Revitalização da manta de impermeabilização','31/03/26','10/04/26',10,100,50000,'Precisa fechar com fornecedor'),
+        S('c1-2.3','2.3 Recebimento e disposição (em área coberta)','09/04/26','24/06/26',76,100,null,'Considerando 3.000m³/mês')]),
+      G('c1-3','3. Desmobilização da Vala 3 e preparação entrevalas','g','13/04/26','24/06/26',72,100,270506.40,[
+        S('c1-3.1','3.1 Desmobilização da estrutura','13/04/26','13/05/26',30,100,150000,'Considerar no CAPEX 2026 (…'),
+        S('c1-3.2','3.2 Acesso por trás das valas','01/06/26','06/06/26',5,100,null,'Dimensionar a escavação'),
+        S('c1-3.3','3.3 Instalação e proteção de mantas entrevalas V3/V2','14/05/26','07/06/26',24,100,38256,'Dimensionar área de manta…'),
+        S('c1-3.4','3.4 Instalação e proteção de mantas entrevalas V3/V4','07/06/26','24/06/26',17,100,82250.40,'Dimensionar área de manta…')]),
+      G('c1-4','4. Ocupação do entrevalas','p','07/06/26','31/10/26',146,72,208500.68,[
+        S('c1-4.1','4.1 Recebimento e disposição até antes do período de chuva','07/06/26','31/10/26',146,72,40227.27),
+        S('c1-4.2','4.2 Retirada de resíduos vala 6 para o entrevalas','02/07/26','25/08/26',54,100,139840.91),
+        S('c1-4.4','4.4 Stand-by Vala 6 e 7 período de chuva','01/11/26','06/03/27',125,0,null),
+        S('c1-4.3','4.3 Recebimento e disposição pós período de chuva','07/03/27','30/04/27',54,0,null),
+        S('c1-4.5','4.5 Cobertura do maciço','01/05/27','31/05/27',30,0,28432.50)]),
+      G('c1-5','5. Mobilização do galpão metálico Vala 6','r','08/06/26','17/11/26',162,64,208596.50,[
+        S('c1-5.1','5.1 Restauração da fundação','08/06/26','23/06/26',15,100,8596.50),
+        S('c1-5.2','5.2 Movimentação de resíduos para o entrevalas','02/07/26','25/08/26',50,100,null),
+        S('c1-5.3','5.3 Montagem da estrutura metálica e pluvial','13/07/26','11/09/26',60,115,150000,'Considerar no CAPEX 2026 (…'),
+        S('c1-5.4a','5.4 Desobstrução e sucção do dreno','21/09/26','01/10/26',10,0,null,'Dobrar material p/ limpeza da manta: Gustavo a noite · Sucção de dreno: Tanque logística'),
+        S('c1-5.4b','5.4 Revitalização da manta de impermeabilização','07/11/26','17/11/26',10,0,50000)]),
+      G('c1-6','6. Ampliação céu aberto','g','05/08/26','25/10/26',81,57,207390.69,[
+        S('c1-6.1','6.1 Drenagem dos drenos principais e testemunho','16/05/26','09/08/26',85,100,null,'Verificar volume de líquido…'),
+        S('c1-6.2','6.2 Escavação de terra','05/08/26','24/09/26',50,92,109758.19,'Verificar volume de terra a…'),
+        S('c1-6.3a','6.3 Instalação das mantas principais e testemunho','25/09/26','25/10/26',30,0,97632.50,'2 equipes'),
+        S('c1-6.3b','6.3 Instalação dos tubos de ligação dos drenos Vala 2 e Vala 8','27/10/26','06/11/26',10,0,null,'2 equipes'),
+        S('c1-6.4','6.4 Recebimento e disposição','01/05/27','14/10/27',166,0,null,'Conferir com projetos')]),
+      G('c1-7','7. Solda de manta em frente à Vala 7','p','24/08/26','13/09/26',20,135,null,[
+        S('c1-7.1','7.1 Limpeza manual da manta','24/08/26','04/09/26',11,245,null),
+        S('c1-7.2','7.2 Movimentação de material acesso','31/08/26','03/09/26',3,100,null),
+        S('c1-7.3','7.3 Solda de manta','08/09/26','13/09/26',5,240,null)]),
+      G('c1-8','8. Lagoa AVCB','p','20/08/26','20/08/26',0,null,null,[
+        S('c1-8.1','8.1 Escavação e terraplanagem','20/08/26','20/08/26',0,null,null),
+        S('c1-8.2','8.2 Instalação de manta','20/08/26','20/08/26',0,null,null)])
+    ]},
+    c2:{nome:'CLASSE II', sub:'Fases de ocupação · Ampliações · Lagoa de chorume', grupos:[
+      G('c2-1','1. Ocupação Fase 1','b','09/01/26','10/04/26',91,100,null,[
+        S('c2-1.1','1.1 Destinação dos resíduos','09/01/26','10/04/26',91,100,null)]),
+      G('c2-2','2. Ocupação do retaludamento','r','15/04/26','12/07/26',88,100,180228.90,[
+        S('c2-2.1','2.1 Retirada do excedente de terra de cobertura dos taludes','15/04/26','05/06/26',51,100,null),
+        S('c2-2.2','2.2 Montagem dos drenos','15/04/26','17/04/26',2,100,null),
+        S('c2-2.3','2.1 Destinação dos resíduos','18/04/26','12/07/26',85,100,null)]),
+      G('c2-3','3. Ocupação Fase 3','g','13/07/26','24/08/26',42,164,null,[
+        S('c2-3.1','3.1 Destinação dos resíduos','13/07/26','24/08/26',42,164,null)]),
+      G('c2-4','4. Ampliação Fase 1','p','01/06/26','20/08/26',117,95,230309.64,[
+        S('c2-4.1','4.1 Escavação de terra','01/06/26','29/07/26',58,100,176309.64),
+        S('c2-4.2','4.2 Terraplanagem','29/07/26','31/07/26',2,100,15500),
+        S('c2-4.3','4.3 Instalação de manta','03/08/26','15/08/26',12,100,38500),
+        S('c2-4.4','4.4 Cobertura da manta com terra','14/08/26','20/08/26',6,100,null),
+        S('c2-4.5','4.5 Destinação dos resíduos (ocupação Fase 4)','25/08/26','03/10/26',39,67,null,'',{destaque:true})]),
+      G('c2-6','6. Ocupação Fase 5','o','04/10/26','24/11/26',51,0,null),
+      G('c2-7','7. Ocupação Fase 6','o','25/11/26','04/08/27',252,0,null),
+      G('c2-8','8. Ocupação Fase 7','o','05/08/27','10/05/28',279,0,null),
+      G('c2-9','9. Ampliação Fase 2','b','29/07/26','01/11/26',95,56,null,[
+        S('c2-9.1','9.1 Escavação de terra','29/07/26','01/11/26',95,56,null,'Estimar o volume após finalização da escavação da lagoa')]),
+      G('c2-10','10. Lição aprendida – revitalização drenagem berma','r','15/04/26','03/08/26',110,100,30078.79,[
+        S('c2-10.1','10.1 Escavação','15/04/26','30/07/26',106,100,null),
+        S('c2-10.2','10.2 Instalação do novo dreno e ligação no biogás','06/06/26','03/08/26',58,100,null)]),
+      G('c2-11','11. Lição aprendida – drenagem de topo e descidas de água','g','17/08/26','16/01/27',300,11,null,[
+        S('c2-11.1','11.2 Instalação de descidas de água','17/08/26','16/10/26',60,57,null),
+        S('c2-11.2','11.2 Instalação de canaletas','17/10/26','16/12/26',60,0,null,'Terceirização'),
+        S('c2-11.3','11.2 Instalação de caixas de passagens','17/12/26','16/01/27',30,0,null,'Terceirização')]),
+      G('c2-12','12. Lagoa de armazenamento de chorume','p','24/08/26','31/10/26',75,36,null,[
+        S('c2-12.1','12.1 Terraplanagem corte/aterro','24/08/26','23/09/26',30,90,null),
+        S('c2-12.2','12.2 Instalação de manta impermeabilizante','24/09/26','04/10/26',10,0,null,'CANCELADO',{cancel:true}),
+        S('c2-12.3','12.3 Instalação de piezômetro e marcos topográficos','24/09/26','04/10/26',10,0,null,'CANCELADO',{cancel:true}),
+        S('c2-12.4','12.4 Tubulação de entrada/saída','05/10/26','20/10/26',15,0,null,'CANCELADO',{cancel:true}),
+        S('c2-12.5','12.5 Adaptação da caixa de entrada da lagoa pequena','21/10/26','31/10/26',10,0,null,'CANCELADO',{cancel:true})])
+    ]}
+  };
+
+  const st={classe:'ambas', vista:'cal', ano:'todos', aberto:new Set()};
+  const hexA=(h,a)=>{const n=parseInt(h.slice(1),16);return `rgba(${n>>16},${(n>>8)&255},${n&255},${a})`;};
+  const f2=n=>String(n).padStart(2,'0');
+  const fmt=t=>{const d=new Date(t);return f2(d.getUTCDate())+'/'+f2(d.getUTCMonth()+1)+'/'+String(d.getUTCFullYear()).slice(2);};
+  const fmtC=t=>{const d=new Date(t);return f2(d.getUTCDate())+'/'+f2(d.getUTCMonth()+1);};
+  const money=v=>v==null?'—':'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const classes=()=>st.classe==='ambas'?['c1','c2']:[st.classe];
+  const todos=k=>CR[k].grupos.flatMap(g=>[g,...g.subs]);
+  const hojeMs=()=>{const el=document.getElementById('datePicker');const v=el&&el.value?el.value:new Date().toISOString().slice(0,10);const [y,m,d]=v.split('-').map(Number);return Date.UTC(y,m-1,d);};
+
+  function periodo(){
+    const all=classes().flatMap(todos);
+    if(st.ano!=='todos'){const y=+st.ano;return [Date.UTC(y,0,1),Date.UTC(y+1,0,1)];}
+    const mn=new Date(Math.min(...all.map(i=>i.ini))), mx=new Date(Math.max(...all.map(i=>i.fim)));
+    return [Date.UTC(mn.getUTCFullYear(),mn.getUTCMonth(),1), Date.UTC(mx.getUTCFullYear(),mx.getUTCMonth()+1,1)];
+  }
+  function anos(){
+    const all=classes().flatMap(todos);
+    const a=new Date(Math.min(...all.map(i=>i.ini))).getUTCFullYear(), b=new Date(Math.max(...all.map(i=>i.fim))).getUTCFullYear();
+    const r=[];for(let y=a;y<=b;y++)r.push(y);return r;
+  }
+  function linhas(k,a,b){
+    const out=[];
+    CR[k].grupos.forEach(g=>{
+      const ov=i=>i.fim+DIA>a && i.ini<b;
+      if(!ov(g)) return;
+      out.push({it:g,g:true});
+      const ab=st.aberto.has(g.id);
+      g.subs.forEach(s=>{ if((ab||s.destaque)&&ov(s)) out.push({it:s,g:false,cor:g.cor}); });
+    });
+    return out;
+  }
+
+  function toolbar(){
+    const yrs=anos();
+    const opt=(v,t)=>`<option value="${v}"${String(st.ano)===String(v)?' selected':''}>${t}</option>`;
+    const seg=(k,arr)=>`<div class="cr-seg">${arr.map(([v,t])=>`<button class="${st[k]===v?'on':''}" onclick="crSet('${k}','${v}')">${t}</button>`).join('')}</div>`;
+    const allOpen=classes().flatMap(k=>CR[k].grupos).filter(g=>g.subs.length).every(g=>st.aberto.has(g.id));
+    return seg('classe',[['ambas','Classe I + Classe II'],['c1','Classe I'],['c2','Classe II']])
+      + seg('vista',[['cal','Calendário'],['tab','Tabela']])
+      + `<div><span class="cr-lbl">PERÍODO</span><select class="cr-sel" onchange="crSet('ano',this.value)">${opt('todos','Tudo')}${yrs.map(y=>opt(y,y)).join('')}</select></div>`
+      + `<button class="cr-btn" onclick="crAll()">${allOpen?'Recolher etapas':'Expandir etapas'}</button>`;
+  }
+
+  function resumo(k){
+    const t=todos(k), gs=CR[k].grupos;
+    return `${gs.length} atividades · ${fmt(Math.min(...t.map(i=>i.ini)))} → ${fmt(Math.max(...t.map(i=>i.fim)))}`;
+  }
+
+  function calendario(){
+    const [a,b]=periodo(), span=b-a, pct=t=>(t-a)/span*100;
+    // cabeçalho
+    let yr='', mo='', gl='';
+    for(let t=a;t<b;){
+      const d=new Date(t), y=d.getUTCFullYear(), m=d.getUTCMonth();
+      const nx=Date.UTC(y,m+1,1);
+      mo+=`<div class="cr-mo" style="left:${pct(t)}%;width:${(nx-t)/span*100}%">${MESES[m]}</div>`;
+      gl+=`<div class="cr-gl${m===0?' y':''}" style="left:${pct(t)}%"></div>`;
+      t=nx;
+    }
+    for(let y=new Date(a).getUTCFullYear(); Date.UTC(y,0,1)<b; y++){
+      const s=Math.max(a,Date.UTC(y,0,1)), e=Math.min(b,Date.UTC(y+1,0,1));
+      yr+=`<div class="cr-yr" style="left:${pct(s)}%;width:${(e-s)/span*100}%">${y}</div>`;
+    }
+    const h=hojeMs(); let hoje='',hojeTag='';
+    if(h>=a&&h<b){hoje=`<div class="cr-today" style="left:${pct(h)}%"></div>`;hojeTag=`<div class="cr-hoje-tag" style="left:${pct(h)}%">${fmtC(h)}</div>`;}
+
+    let body='', n=0;
+    classes().forEach(k=>{
+      const ls=linhas(k,a,b);
+      body+=`<div class="cr-sec"><span class="cr-sec-t">${CR[k].nome}</span><span class="cr-sec-s">${CR[k].sub} · ${resumo(k)}</span></div>`;
+      ls.forEach(({it,g,cor})=>{
+        n++;
+        const c=CORES[g?it.cor:cor];
+        const L=pct(it.ini), R=pct(it.fim+DIA), l=Math.max(0,L), r=Math.min(100,R), w=Math.max(r-l,0);
+        const pg=it.prog==null?null:it.prog;
+        const fill=Math.min(100,pg||0);
+        const lado=r>72?`right:${100-l}%`:`left:${r}%`;
+        const ab=st.aberto.has(it.id);
+        const cls=(g?'g':'s')+(it.cancel?' cancel':'');
+        body+=`<div class="cr-row ${cls}">
+          <div class="cr-l" ${g&&it.subs.length?`onclick="crToggle('${it.id}')"`:''} title="${it.nome} — ${fmt(it.ini)} a ${fmt(it.fim)} · ${it.dur} dias">
+            <span class="cr-chev">${g&&it.subs.length?(ab?'▾':'▸'):''}</span>
+            <span class="cr-nm">${it.nome}</span>${it.cancel?'<span class="cr-tag">CANCELADO</span>':''}
+            <span class="cr-pg${pg>=100?' ok':''}">${pg==null?'—':pg+'%'}</span>
+          </div>
+          <div class="cr-t">
+            <div class="cr-bar${L<0?' cl':''}${R>100?' cr':''}" style="left:${l}%;width:${w}%;background:${hexA(c,.25)};border-color:${hexA(c,.85)}" title="${it.nome}\n${fmt(it.ini)} → ${fmt(it.fim)} · ${it.dur} dias · ${pg==null?'sem progresso':pg+'%'}">
+              <div class="cr-fill" style="width:${fill}%;background:${c}"></div>
+            </div>
+            <span class="cr-dt" style="${lado}">${fmtC(it.ini)} → ${fmtC(it.fim)}</span>
+          </div>
+        </div>`;
+      });
+    });
+    if(!n) return `<div class="cr-empty">Nenhuma atividade neste período.</div>`;
+    return `<div class="cr-inner">
+      <div class="cr-head"><div class="cr-hl">ATIVIDADE · PROGRESSO</div><div class="cr-ht">${yr}${mo}${hojeTag}</div></div>
+      <div class="cr-body"><div class="cr-grid">${gl}${hoje}</div>${body}</div></div>`;
+  }
+
+  function tabela(){
+    const [a,b]=periodo();
+    let rows='', n=0;
+    classes().forEach(k=>{
+      rows+=`<tr class="sec"><td colspan="7">${CR[k].nome}<small>${CR[k].sub} · ${resumo(k)}</small></td></tr>`;
+      linhas(k,a,b).forEach(({it,g,cor})=>{
+        n++;
+        const c=CORES[g?it.cor:cor];
+        const pg=it.prog;
+        const ab=st.aberto.has(it.id);
+        rows+=`<tr class="${g?'g':'s'}${it.cancel?' cancel':''}" style="background:${hexA(c,g?.2:.08)}">
+          <td class="l n" ${g&&it.subs.length?`onclick="crToggle('${it.id}')"`:''}>${g&&it.subs.length?(ab?'▾ ':'▸ '):''}${it.nome}</td>
+          <td class="l obs">${it.obs}</td>
+          <td class="val">${money(it.val)}</td>
+          <td><div class="cr-pbar"><i style="width:${Math.min(100,pg||0)}%"></i><b>${pg==null?'—':pg+'%'}</b></div></td>
+          <td>${it.dur}</td><td>${fmt(it.ini)}</td><td>${fmt(it.fim)}</td></tr>`;
+      });
+    });
+    if(!n) return `<div class="cr-empty">Nenhuma atividade neste período.</div>`;
+    return `<table class="cr-tbl"><thead><tr><th class="l">TAREFA</th><th class="l">OBSERVAÇÕES</th><th>VALOR ESTIMADO</th><th>PROGRESSO</th><th>DURAÇÃO</th><th>INÍCIO</th><th>TÉRMINO</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  function crRender(){
+    const tb=document.getElementById('crToolbar'); if(!tb) return;
+    tb.innerHTML=toolbar();
+    document.getElementById('crScroll').innerHTML = st.vista==='cal'?calendario():tabela();
+    if(typeof fitCardToViewport==='function') fitCardToViewport();
+  }
+  window.crRender=crRender;
+  window.crSet=(k,v)=>{ st[k]=v; if(k==='classe' && st.ano!=='todos' && !anos().includes(+st.ano)) st.ano='todos'; crRender(); };
+  window.crToggle=id=>{ st.aberto.has(id)?st.aberto.delete(id):st.aberto.add(id); crRender(); };
+  window.crAll=()=>{
+    const gs=classes().flatMap(k=>CR[k].grupos).filter(g=>g.subs.length);
+    const allOpen=gs.every(g=>st.aberto.has(g.id));
+    gs.forEach(g=>allOpen?st.aberto.delete(g.id):st.aberto.add(g.id));
+    crRender();
+  };
+  document.getElementById('datePicker').addEventListener('change',()=>{ if(st.vista==='cal') crRender(); });
+  crRender();
+})();
+</script>
+
 </body>
 </html>
