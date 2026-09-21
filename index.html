@@ -467,7 +467,7 @@
   <div class="dash-header">
     <div class="date-picker-wrap">
       <div class="date-picker-label">VER DIA</div>
-      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-18">
+      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-20">
       <div class="date-weekday" id="dateWeekday"></div>
     </div>
     <div class="title" id="mainTitle">Controle Operacional</div>
@@ -935,6 +935,21 @@ function render(D){
 const opMachineOrder = ["EH 05","EH 09","TE 03","TEA 279","TEA 340","RE 01","CP 05","CP 06","CP 07","CP 17","CP 18","FUW 0A32","EKK 1450","EKH 9H12","Atividades Gerais - Soma","Atividades Gerais - Terceiros"];
 
 const opCalendar = {
+  "2026-09-20": {
+    "EH 05":{status:"idle"}, "EH 09":{status:"idle"}, "TE 03":{status:"maint"},
+    "TEA 279":{status:"idle"}, "TEA 340":{status:"idle"},
+    "RE 01":{status:"idle"}, "CP 06":{status:"idle"}, "CP 07":{status:"idle"}, "CP 17":{status:"idle"}, "CP 18":{status:"idle"},
+    "FUW 0A32":{status:"idle"}, "EKK 1450":{status:"idle"}, "EKH 9H12":{status:"idle"},
+    "Atividades Gerais - Soma":{status:"idle"}, "Atividades Gerais - Terceiros":{status:"idle"}
+  },
+  "2026-09-19": {
+    "EH 05":{status:"work",desc:"Apoio obra pátio da balança"}, "EH 09":{status:"idle"}, "TE 03":{status:"maint"},
+    "TEA 279":{status:"idle"}, "TEA 340":{status:"work",desc:"Frente de serviço"},
+    "RE 01":{status:"idle"}, "CP 06":{status:"idle"}, "CP 07":{status:"idle"}, "CP 17":{status:"idle"}, "CP 18":{status:"idle"},
+    "FUW 0A32":{status:"idle"}, "EKK 1450":{status:"idle"}, "EKH 9H12":{status:"idle"},
+    "Atividades Gerais - Soma":{status:"work",desc:"Roçada, limpeza e pintura de canaletas e organização geral no aterro municipal"},
+    "Atividades Gerais - Terceiros":{status:"idle"}
+  },
   "2026-09-18": {
     "EH 05":{status:"work",desc:"Apoio obra pátio da balança, ampliação CLI e remonte vala 3"},
     "EH 09":{status:"work",desc:"Carregamento de entulho e ampliação CLI"},
