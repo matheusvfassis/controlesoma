@@ -467,7 +467,7 @@
   <div class="dash-header">
     <div class="date-picker-wrap">
       <div class="date-picker-label">VER DIA</div>
-      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-23">
+      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-24">
       <div class="date-weekday" id="dateWeekday"></div>
     </div>
     <div class="title" id="mainTitle">Controle Operacional</div>
@@ -627,8 +627,11 @@ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ equaliz
 // colorida automaticamente (máquina estava parada e foi liberada depois).
 // ============================================================
 // Último dia com lista de manutenção confirmada (mesmo sem novas liberações)
-const manutConfirmadaAte = "2026-09-23";
+const manutConfirmadaAte = "2026-09-24";
 const events = [
+  {code:"CP 07", desc:"Radiador vazando", categoria:"Mecânica", start:"2026-09-24", end:null, resolvedDate:null, outcome:null},
+  {code:"EH 09", desc:"Revisão com 2767.5 horas (das 11:00 as 16:00)", categoria:"Outros", start:"2026-09-24", end:"2026-09-24", resolvedDate:"2026-09-24", outcome:"reparo"},
+  {code:"EH 05", desc:"Mangueira de óleo hidráulico vazando (manhã)", categoria:"Hidráulica", start:"2026-09-24", end:"2026-09-24", resolvedDate:"2026-09-24", outcome:"reparo"},
   {code:"PP 01", desc:"Cano de diesel trincado", categoria:"Mecânica", start:"2026-09-21", end:null, resolvedDate:null, outcome:null},
   {code:"TE 03", desc:"Radiador", categoria:"Mecânica", start:"2026-09-16", end:"2026-09-20", resolvedDate:"2026-09-21", outcome:"reparo"},
   {code:"I 03", desc:"Folga no diferencial", categoria:"Mecânica", start:"2026-09-16", end:null, resolvedDate:null, outcome:null},
@@ -938,6 +941,23 @@ function render(D){
 const opMachineOrder = ["EH 05","EH 09","TE 03","TEA 279","TEA 340","RE 01","CP 05","CP 06","CP 07","CP 17","CP 18","FUW 0A32","EKK 1450","EKH 9H12","Atividades Gerais - Soma","Atividades Gerais - Terceiros"];
 
 const opCalendar = {
+  "2026-09-24": {
+    "EH 05":{status:"mixed-am",desc:"Ampliação CLI e Vala 3"},
+    "EH 09":{status:"work",desc:"Ampliação CLI, MANUTENÇÃO (Revisão de 2500 horas das 11:00 as 16:00) e ampliação CLI"},
+    "TE 03":{status:"work",desc:"Conformização lateral retalude"},
+    "TEA 279":{status:"work",desc:"Vala 7 e Vala 3"},
+    "TEA 340":{status:"work",desc:"Frente de serviço"},
+    "RE 01":{status:"work",desc:"Solidificação"},
+    "CP 06":{status:"work",desc:"7 solidificação para Vala 3"},
+    "CP 07":{status:"maint"},
+    "CP 17":{status:"work",desc:"Entrega de caixas do SOMA Social; Movimentação de pessoal (cobrindo CT36)"},
+    "CP 18":{status:"idle"},
+    "FUW 0A32":{status:"work",desc:"3 terra para o retalude e 5 terra para a Vala 7"},
+    "EKK 1450":{status:"work",desc:"4 terra para o retalude e 5 terra para vala 7"},
+    "EKH 9H12":{status:"work",desc:"7 terra para Vala 7 e 4 terra para o retalude"},
+    "Atividades Gerais - Soma":{status:"work",desc:"Roçada, limpeza de canaletas e sacolinhas"},
+    "Atividades Gerais - Terceiros":{status:"work",desc:"Petrus - Drenagem e concretagem do pátio da balança; Decide - Galpão vala 6 e forro da cobertura das salas da Operação e RH"}
+  },
   "2026-09-23": {
     "EH 05":{status:"work",desc:"Ampliação CLI"},
     "EH 09":{status:"work",desc:"Ampliação CLI"},
