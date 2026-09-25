@@ -467,7 +467,7 @@
   <div class="dash-header">
     <div class="date-picker-wrap">
       <div class="date-picker-label">VER DIA</div>
-      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-24">
+      <input type="date" id="datePicker" min="2026-05-31" max="2026-12-31" value="2026-09-25">
       <div class="date-weekday" id="dateWeekday"></div>
     </div>
     <div class="title" id="mainTitle">Controle Operacional</div>
@@ -627,14 +627,16 @@ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ equaliz
 // colorida automaticamente (máquina estava parada e foi liberada depois).
 // ============================================================
 // Último dia com lista de manutenção confirmada (mesmo sem novas liberações)
-const manutConfirmadaAte = "2026-09-24";
+const manutConfirmadaAte = "2026-09-25";
 const events = [
+  {code:"CT 36", desc:"Vazamento de óleo de câmbio", categoria:"Mecânica", start:"2026-09-25", end:null, resolvedDate:null, outcome:null},
+  {code:"I 03", desc:"Pino de centro", categoria:"Mecânica", start:"2026-09-25", end:null, resolvedDate:null, outcome:null},
   {code:"CP 07", desc:"Radiador vazando", categoria:"Mecânica", start:"2026-09-24", end:null, resolvedDate:null, outcome:null},
   {code:"EH 09", desc:"Revisão com 2767.5 horas (das 11:00 as 16:00)", categoria:"Outros", start:"2026-09-24", end:"2026-09-24", resolvedDate:"2026-09-24", outcome:"reparo"},
   {code:"EH 05", desc:"Mangueira de óleo hidráulico vazando (manhã)", categoria:"Hidráulica", start:"2026-09-24", end:"2026-09-24", resolvedDate:"2026-09-24", outcome:"reparo"},
   {code:"PP 01", desc:"Cano de diesel trincado", categoria:"Mecânica", start:"2026-09-21", end:null, resolvedDate:null, outcome:null},
   {code:"TE 03", desc:"Radiador", categoria:"Mecânica", start:"2026-09-16", end:"2026-09-20", resolvedDate:"2026-09-21", outcome:"reparo"},
-  {code:"I 03", desc:"Folga no diferencial", categoria:"Mecânica", start:"2026-09-16", end:null, resolvedDate:null, outcome:null},
+  {code:"I 03", desc:"Folga no diferencial", categoria:"Mecânica", start:"2026-09-16", end:"2026-09-24", resolvedDate:"2026-09-25", outcome:"reparo"},
   {code:"CP 06", desc:"Indicador de temperatura parou, alguns faróis e lanternas queimados", categoria:"Elétrica", start:"2026-09-14", end:"2026-09-16", resolvedDate:"2026-09-17", outcome:"reparo", startMidDay:true},
   {code:"CP 06", desc:"Pneu estourou", categoria:"Pneumática", start:"2026-09-17", end:"2026-09-17", resolvedDate:"2026-09-18", outcome:"reparo"},
   {code:"TEA 340", desc:"Revisão com 1539.8 horas (manhã)", categoria:"Outros", start:"2026-09-17", end:"2026-09-17", resolvedDate:"2026-09-17", outcome:"reparo"},
@@ -747,7 +749,7 @@ const events = [
   {code:"CP 05", desc:"Embreagem", categoria:"Mecânica", start:"2026-08-07", end:"2026-08-31", resolvedDate:"2026-09-01", outcome:"reparo"},
   {code:"CT 36", desc:"Mangueira de água do radiador", categoria:"Hidráulica", start:"2026-08-07", end:"2026-08-12", resolvedDate:"2026-08-12", outcome:"reparo"},
   {code:"CP 06", desc:"Virar óleo hidráulico", categoria:"Hidráulica", start:"2026-08-12", end:"2026-08-13", resolvedDate:"2026-08-14", outcome:"reparo"},
-  {code:"CT 36", desc:"Bomba injetora", categoria:"Mecânica", start:"2026-08-14", end:null, resolvedDate:null, outcome:null},
+  {code:"CT 36", desc:"Bomba injetora", categoria:"Mecânica", start:"2026-08-14", end:"2026-09-24", resolvedDate:"2026-09-25", outcome:"reparo"},
   {code:"EH 09", desc:"Troca de óleo e filtros", categoria:"Mecânica", start:"2026-08-10", end:"2026-08-10", resolvedDate:"2026-08-11", outcome:"reparo"},
   {code:"PP 01", desc:"Pneu furado", categoria:"Mecânica", start:"2026-08-11", end:"2026-08-11", resolvedDate:"2026-08-11", outcome:"reparo"},
   {code:"PP 01", desc:"Vazamento de óleo hidráulico", categoria:"Hidráulica", start:"2026-08-20", end:"2026-08-20", resolvedDate:"2026-08-20", outcome:"reparo"},
@@ -941,6 +943,23 @@ function render(D){
 const opMachineOrder = ["EH 05","EH 09","TE 03","TEA 279","TEA 340","RE 01","CP 05","CP 06","CP 07","CP 17","CP 18","FUW 0A32","EKK 1450","EKH 9H12","Atividades Gerais - Soma","Atividades Gerais - Terceiros"];
 
 const opCalendar = {
+  "2026-09-25": {
+    "EH 05":{status:"work",desc:"Ampliação CLI"},
+    "EH 09":{status:"work",desc:"Drenos CLIIA e Ampliação CLI"},
+    "TE 03":{status:"work",desc:"Vala 7"},
+    "TEA 279":{status:"work",desc:"Vala 3"},
+    "TEA 340":{status:"work",desc:"Frente de serviço"},
+    "RE 01":{status:"work",desc:"Solidificação"},
+    "CP 06":{status:"work",desc:"7 solidificação para Vala 3"},
+    "CP 07":{status:"maint"},
+    "CP 17":{status:"work",desc:"Movimentação de pessoal (cobrindo CT 36)"},
+    "CP 18":{status:"idle"},
+    "FUW 0A32":{status:"work",desc:"4 terra Vala 7"},
+    "EKK 1450":{status:"work",desc:"4 terra Vala 7"},
+    "EKH 9H12":{status:"work",desc:"6 terra Vala 7"},
+    "Atividades Gerais - Soma":{status:"work",desc:"Roçada, limpeza de canaletas e sacolinhas"},
+    "Atividades Gerais - Terceiros":{status:"work",desc:"Petrus - Drenagem e concretagem do pátio da balança"}
+  },
   "2026-09-24": {
     "EH 05":{status:"mixed-am",desc:"Ampliação CLI e Vala 3"},
     "EH 09":{status:"mixed-pm",desc:"Ampliação CLI"},
